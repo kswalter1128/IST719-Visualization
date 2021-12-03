@@ -1,0 +1,91 @@
+---
+title: "Plotly - Open-Source Graphing Library"
+author: "Kyle Walter - IST719"
+date: "8/23/2021"
+output:
+  ioslides_presentation:
+    widescreen: true
+    include: 
+      after-body: "Kyle Walter|IST719"
+---
+## What is Plotly
+
+Plotly is an open source Graphing Library works with a number of coding languages and is designed to make interactive graphs that can be displayed in HTML
+
+It works with several coding languages:
+
+- R
+- Python
+- Java Script
+
+<center>
+![Language Snapshot from Graphing Library](Plotly Major Languages.png){width=100%}
+</center>
+
+## In R
+
+Calling the plotly package allows 2 main ways to create Plotly Graphics
+
+1. via GGPlot by passing a created ggplot to a function called ggplotly
+2. Via plotly's own graphing process that is similar to ggplot
+
+![The Plotly Logo](Plotly-logo-01-square.png){width=100%}
+
+## GGPLOT vs Plotly Similarities
+In R there are many similarities between how Plotly and GGPLOT charts are put together.
+
+```{r gg v plotly, echo=FALSE, message=FALSE, warning=FALSE, paged.print=TRUE}
+require(data.table)
+sims <- data.table(ggplot = c("ggplot()","ggtitle(), labels_*", "geom_*" ), plotly = c("plot_ly", "layout()", "add_trace()"), Similarjob = c("Maps R object to the the graphing library", "Allows for changes to the layout and titles of the chart","determins type of chart such as histogram and other factors"))
+
+require(DT)
+datatable(sims)
+```
+
+## GGPLOT to Plotly Example
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+require(ggplot2)
+require(tidyverse)
+require(plotly)
+data <- fread("J:/My Drive/Graduate School/IST719 Vizualization/Files for Class from 2U/wine.txt")
+```
+
+
+```{r message=FALSE, warning=FALSE}
+g <- ggplot(data = data)+aes(x=units.sold, y = income, color = wine,pch = type)+
+  geom_point()+ggtitle("Example Plot")
+ggplotly(g) %>% layout()
+```
+
+## Directly in Plotly
+```{r message=FALSE, warning=FALSE}
+plot_ly(data = data, x= ~units.sold, y= ~income,
+        color = ~wine, symbol = ~type) %>% 
+  layout(title = " A quick Plotly Graph")
+```
+
+## Using multiple traces
+```{r message=FALSE, warning=FALSE}
+plot_ly(data = data, x= ~factor(wine), y = ~income, type = 'scatter',
+       name = 'scatterplot') %>% add_boxplot(name = "boxplot") %>% 
+  layout(title = 'Layed Wine Chart')
+```
+
+## Maps
+Plotly also provides a large number of realtively easy options for creating maps via base data frames. Here are some of the options:
+![](Plotly Maps.png){width=100%}
+
+## Buttons and Other Notes
+
+Plotly, as part of the interactive promise, offers the ability to create additional items:
+
+![](Dynamic Controls.png)
+
+For a full list of graphing options and how to execute them visit:
+https://plotly.com/graphing-libraries/
+
+## The End | Kyle Walter IST719
+
+<center>
+Any Questions?
+</center>
